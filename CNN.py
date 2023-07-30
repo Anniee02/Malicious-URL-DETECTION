@@ -108,3 +108,47 @@ history2 = model2.fit(X2_train, Y2_train, epochs=10,
 batch_size=300,validation_data=(X2_test, Y2_test))
 model1.save("greater_model")
 model2.save("lesser_model")
+
+
+import pandas as pd
+import numpy as np
+import tensorflow as tf
+import cv2
+import math
+def resizeList(chrs):
+size=len(chrs)
+sqr_rt=int(math.sqrt(size))+1
+new_size=sqr_rt**2;
+chrs=chrs+[0]*(new_size-len(chrs))
+chrs=np.reshape(chrs,(sqr_rt,sqr_rt)).astype('float32')
+chrs=cv2.resize(chrs,(7,7),interpolation=cv2.INTER_AREA)
+return(chrs)
+def getImg(url):
+chars=[]
+for num in url:
+if(ord(num)<255):
+chars.append(ord(num))
+else:
+chars.append(255)
+if(len(chars)<=49):
+chars=chars+[0]*(49-len(chars))
+chars=np.reshape(chars,(7,7))
+else:
+chars=resizeList(chars)
+return chars;
+def getPrediction(test_url,model1,model2):
+length=len(test_url)
+test_url=getImg(test_url)
+test_url=test_url/255
+test_url=test_url.reshape(1,*(7,7,1))
+prediction=0
+if(length<=49):
+prediction=model2.predict(test_url)
+else:
+prediction=model1.predict(test_url)
+classes = np.argmax(prediction, axis = 1)
+return(classes)
+model1=tf.keras.models.load_model("greater_model")
+model2=tf.keras.models.load_model("lesser_model")
+print(getPrediction("https://www.g0oadsfasdgfgasgasdle.com/",model1,model2)
+)
