@@ -1,0 +1,37 @@
+1. Random Forest Regression
+The random forest regression model makes use of 100 decision trees.
+These decision trees have been set to use the Gini impurity in order to
+decide the splits. The model uses bootstrapping ie. random sampling with
+replacement to train each decision tree. Bagging is then used as an
+aggregator to make the final decision. All the 100 decision trees make
+their decision based on their individual decision rules which are then
+averaged out to make the final decision.
+2. K Nearest Neighbours
+The 5 nearest neighbours of a test data point will be considered to make a
+decision about the test data point. Euclidean distance (power = 2) is used
+to determine the nearest neighbours. All points are given an equal
+weightage.
+3. ANN
+The ANN consists of input, hidden, and output layers. In our dataset, the
+input is of 10 values, so the first layer has 10 inputs. The second and third
+layers have dimensions 20 and 10 respectively, and the final layer has 4
+nodes. Each layer is a dense layer ie. every node is connected to every
+node in the next and previous layer. The activation function used for each
+layer in the ANN in ReLu, which outputs the input value if it is greater
+than 0 or else it outputs 0. Categorical cross entropy is used as the loss
+function used to calculate losses and update weights. Adaptive Moment
+Estimation or ‘Adam’ is the optimizer, which combines the ‘gradient
+descent with momentum’ algorithm and the ‘RMSP’ algorithm.
+4. CNN
+Both the CNN models (for url length <= 49 and url length > 49) have the
+same structure. The initial layer is a convolutional layer with the kernel
+dimension 1*1, input dimension 7*7, and 32 filters since all the URLs are
+being standardized to that dimension. This is followed by a 2D Max
+pooling layer with a 2*2 pool size. The next layer is a convolutional layer
+with 64 filters and 1*1 kernel dimension, which is followed by another
+2*2 max pooling layer. This then connects to another convolutional layer
+with 64 filters and a 1*1 kernel. Then the result is flattened and given to a
+dense layer with dimension 64. Finally a dense layer of dimension 2
+serves as the output layer. All layers except the output layer use the ReLu
+activation function. The output layer makes use of the softmax activation
+function.
